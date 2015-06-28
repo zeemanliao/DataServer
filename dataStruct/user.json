@@ -1,0 +1,8 @@
+{
+	"id":"integer",
+	"name":"string",
+	"pass":"string",
+	"email":"string",
+	"lastLoginDate":"string",
+	"lastLoginTime":"string"
+}

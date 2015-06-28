@@ -1,0 +1,39 @@
+{
+  "name": "zeeman-game-data-server",
+  "version": "0.0.1",
+  "private": false,
+  "homepage": "https://github.com/zeemanliao/DataServer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zeemanliao/DataServer.git"
+  },
+  "scripts": {
+    "test": "grunt",
+    "start": "iojs index.js"
+  },
+  "keywords": [
+    "data",
+    "server"
+  ],
+  "dependencies": {
+    "zeeman-game-connect":">=0.0.4",
+    "mongodb":"2.0.35"
+  },
+  "devDependencies": {
+    "should": "3.3.1",
+    "mocha": ">=0.0.1",
+    "muk": ">=0.0.1",
+    "grunt": "~0.4.2",
+    "grunt-mocha-test": "0.8.x",
+    "grunt-contrib-clean": "0.5.x",
+    "grunt-contrib-jshint": "~0.8.0",
+    "blanket": "~1.1.6"
+  },
+  "description": "Game Data Server",
+  "bugs": {
+    "url": "https://github.com/zeemanliao/DataServer/issues"
+  },
+  "main": "index.js",
+  "author": "zeemanliao",
+  "license": "MIT"
+}
