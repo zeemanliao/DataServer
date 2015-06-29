@@ -9,7 +9,7 @@ let storage = new Storage({db:{database:'gamedb'},dataStruct:dataStruct});
 
 storage.load();
 
-setTimeout(storage.start,1000);
+storage.start();
 
 
 let server = gameConnect.createServer({port:9988});
@@ -27,14 +27,11 @@ server.on('get', function(client, req) {
 
 server.on('put', function(client, req) {
 	let _table = req.table;
-	let _idx = req.idx;
 	let _data = req.data;
-	storage.get(_table, _idx, function(err, _data) {
-		if (_data) {}
-		storage.put(_table, _idx, function(err, data) {
-			if (err)
-				return console.log(err);
-		});
+	storage.put(_table, _data, function(err, _data) {
+		if (err)
+			return console.log(err);
+
 	});
 });
 
