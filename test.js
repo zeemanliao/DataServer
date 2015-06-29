@@ -1,7 +1,17 @@
 'use strict';
+let gameConnect = require('zeeman-game-connect');
+let dataServer = gameConnect.createClient({name:'test',port:9988});
+let newID = [];
 
-let Storage = require('./lib/GameStorage');
+dataServer.on('getNewID',function(data) {
+		newID.push(data);
+		console.log(data);
+});
 
-let gameDB = new Storage({database:'gamedb'});
 
-gameDB.load();
+for (let i =0; i<100;i++) {
+	dataServer.send('getNewID');
+}
+
+
+//dataServer.send('put',{});

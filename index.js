@@ -1,8 +1,18 @@
-'use struct';
-var gameConnect = require('zeeman-game-connect');
-var storage = require('./lib/GameStorage');
+'use strict';
+let path = require('path');
+let util = require('./lib/util');
+let gameConnect = require('zeeman-game-connect');
+let Storage = require('./lib/GameStorage');
+let basePath = util.getBasePath();
+let dataStruct = util.requireFolder(path.join(basePath,'dataStruct'),'json')
+let storage = new Storage({db:{database:'gamedb'},dataStruct:dataStruct});
 
-var server = gameConnect.createServer({port:9988});
+storage.load();
+
+setTimeout(storage.start,1000);
+
+
+let server = gameConnect.createServer({port:9988});
 
 server.on('get', function(client, req) {
 	let _table = req.table;
@@ -27,3 +37,10 @@ server.on('put', function(client, req) {
 		});
 	});
 });
+
+server.on('getNewID', function(client) {
+	let newID = storage.getNewID();
+	server.send(client.name, 'getNewID', newID);
+});
+
+
