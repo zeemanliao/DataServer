@@ -16,7 +16,7 @@
     "server"
   ],
   "dependencies": {
-    "zeeman-game-connect":">=0.0.4",
+    "zeeman-game-connect":">=0.0.6",
     "mongodb":"2.0.35"
   },
   "devDependencies": {

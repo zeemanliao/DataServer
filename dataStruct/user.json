@@ -1,5 +1,5 @@
 {
-	"id":"integer",
+	"id":"string",
 	"name":"string",
 	"pass":"string",
 	"email":"string",

@@ -17,9 +17,9 @@ setTimeout(add, 1000);
 
 
 function add() {
-	for (let addi = 1;addi<10;addi++) {
+	for (let addi = 1;addi<100;addi++) {
 		let _id = getNewID();
-		let data = {_id:_id,name:'name'+addi};
+		let data = {_id:_id,id:'id'+addi,name:'name'+addi};
 		dataServer.send('put', {table:'user',data:data});
 	}
 }
