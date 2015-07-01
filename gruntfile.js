@@ -1,9 +1,9 @@
-'use strict';
+
 module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    var src = ['test/*.js'];
+    var src = ['test/*.js','test/lib/*.js'];
     // Project configuration.
     grunt.initConfig({
     		pkg: grunt.file.readJSON('package.json'),

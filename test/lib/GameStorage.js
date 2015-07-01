@@ -1,19 +1,19 @@
 var util = require('util');
-var app = require('../');
+var app = require('../../lib/GameStorage');
 var should = require('should');
-var mockBase = process.cwd() + '/test';
+var mockBase = process.cwd() + '/test/lib';
 
 var dataStruct = {};
-dataStruct.user = require('../dataStruct/user.json');
+dataStruct.user = require('../../dataStruct/user.json');
 
-var dataServer = null;
+var gameStorage = null;
 describe('data', function() {
     describe('#createDataServer', function() {
-        it('should create Data Server And Server Statue is stop', function(done) {
+        it('should create Game Storage', function(done) {
 
-            dataServer = app;
-            should.exist(dataServer);
-            //dataServer.statue.should.equal("stop");
+            gameStorage = new app({db:{database:'gamedb'}, dataStruct:dataStruct});
+            should.exist(gameStorage);
+            //gameStorage.statue.should.equal("stop");
             done();
         });
     });
