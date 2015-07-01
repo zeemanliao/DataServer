@@ -4,7 +4,7 @@ let util = require('./lib/util');
 let gameConnect = require('zeeman-game-connect');
 let Storage = require('./lib/GameStorage');
 let basePath = util.getBasePath();
-let dataStruct = util.requireFolder(path.join(basePath,'dataStruct'),'json')
+let dataStruct = util.requireFolder(path.join(basePath, 'dataStruct'), 'json');
 let storage = new Storage({db:{database:'gamedb'},dataStruct:dataStruct});
 
 storage.load();
