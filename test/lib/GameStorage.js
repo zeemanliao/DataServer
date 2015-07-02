@@ -1,3 +1,6 @@
+/*
+    db.createCollection("user", { size: 10240 } )
+*/
 var util = require('util');
 var app = require('../../lib/GameStorage');
 var should = require('should');
@@ -11,10 +14,23 @@ describe('data', function() {
     describe('#createDataServer', function() {
         it('should create Game Storage', function(done) {
 
-            gameStorage = new app({db:{database:'gamedb'}, dataStruct:dataStruct});
+            gameStorage = new app({db:{database:'testdb'}, dataStruct:dataStruct});
             should.exist(gameStorage);
             //gameStorage.statue.should.equal("stop");
             done();
+        });
+        it('should dataStruct equal', function(done){
+            gameStorage.dataStruct.should.equal(dataStruct);
+            done();
+        });
+        it('should get New ID', function(done) {
+            var newID = gameStorage.getNewID(10);
+            should.exist(gameStorage.getNewID());
+            done();
+        });
+        it('should create CIUD')
+        it('should list dataTable', function(done){
+
         });
     });
     /*
