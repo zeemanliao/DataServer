@@ -2,39 +2,33 @@
     db.createCollection("user", { size: 10240 } )
 */
 var util = require('util');
-var app = require('../../lib/GameStorage');
+var app = require('../../lib/DBStorage');
 var should = require('should');
 var mockBase = process.cwd() + '/test/lib';
-var DBStorage = require('../../lib/DBStorage');
 var testDBName = 'testdb';
 var testTableName = 'testDBStorage';
-var dbStorage = new DBStorage({database:testDBName});
-var dataStruct = {};
-dataStruct.testDBStorage = require('./testDBStorage.json');
-
-var newID = [];
-var gameStorage = null;
-describe('GameStorage', function() {
-    describe('#testGameStorage', function() {
-        it('should create Game Storage ,load data, start Server', function(done) {
-            gameStorage = new app({dbStorage:dbStorage, dataStruct:dataStruct});
-            should.exist(gameStorage);
-            gameStorage.dataStruct.should.equal(dataStruct);
-            gameStorage.load(function(err, datas) {
+var dbStorage = null;
+describe('DBStorage', function() {
+    describe('#testDBStorage', function() {
+        it('should create DBStorage And Connect to '+testDBName+' database', function(done) {
+            dbStorage = new app({database:testDBName});
+            should.exist(dbStorage);
+            done();
+        });
+        it('Create '+testTableName+' Table', function(done) {
+            dbStorage.createTable(testTableName, function(err) {
                 should.not.exist(err);
-                gameStorage.start();
-                gameStorage.statue.should.equal("start");
                 done();
             });
-
+            
         });
-        it('should add 1 recod', function(done) {
-            var idata = {id:2,name:'test2'};
-            gameStorage.put(testTableName, idata, function(err, data) {
+        it('should get a new id and add one recod', function(done) {
+            var newID = dbStorage.getNewID();
+            should.exist(newID);
+            var data = {_id:newID, id:1, name:'test'};
+            dbStorage.put(testTableName, data, function(err, data) {
                 should.not.exist(err);
-                should.exist(data._id);
-                data.id.should.equal(idata.id);
-                data.name.should.equal(idata.name);
+                should.exist(data);
                 done();
             });
         });

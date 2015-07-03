@@ -16,6 +16,14 @@ module.exports = function(grunt) {
                 },
                 src: src
             },
+            testDBStorage: {
+                options: {
+                    reporter: 'spec',
+                    timeout: 5000,
+                    require: 'coverage/blanket'
+                },
+                src: ['test/lib/DBStorage.js']
+            },
             coverage: {
                 options: {
                     reporter: 'html-cov',

@@ -2,12 +2,14 @@ var path = require('path');
 
 var gameConnect = require('zeeman-game-connect');
 var Storage = require('./lib/GameStorage');
+var DBStorage = require('./lib/DBStorage');
+var dbStorage = new DBStorage({database:'gamedb'});
 //var util = require('./lib/util');
 //var basePath = util.getBasePath();
 //var dataStruct = util.requireFolder(path.join(basePath, 'dataStruct'), 'json');
 var dataStruct = {};
 dataStruct.user = require('./dataStruct/user.json');
-var storage = new Storage({db:{database:'gamedb'}, dataStruct:dataStruct});
+var storage = new Storage({dbStorage:dbStorage, dataStruct:dataStruct});
 
 storage.load();
 
