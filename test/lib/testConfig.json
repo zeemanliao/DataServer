@@ -1,0 +1,20 @@
+{
+	"database":"testdb",
+	"testTable":"testTable",
+	"dataStruct":{
+		"testTable":
+		{
+			"id":"integer",
+			"name":"string"
+		},
+		"errTable":
+		{
+			"id":"integer",
+			"name":"string"
+		}
+	},
+	"data":{
+		"id":1,
+		"name":"test1"
+	}
+}
