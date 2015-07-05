@@ -1,8 +1,14 @@
 {
-	"id":"string",
-	"name":"string",
-	"pass":"string",
-	"email":"string",
-	"lastLoginDate":"string",
-	"lastLoginTime":"string"
+	"user":{
+		"id":null,
+		"name":null,
+		"pass":null,
+		"email":null,
+		"lastLoginDate":null,
+		"lastLoginTime":null
+	},
+	"item":{
+		"userid":null,
+		"items":[]
+	}
 }

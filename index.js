@@ -18,6 +18,12 @@ storage.start();
 
 var server = gameConnect.createServer({port:9988});
 
+storage.event.on('error', function(s, err) {
+	if (err) {
+		console.log(err);
+	}
+});
+
 server.on('get', function(client, req) {
 	var _table = req.table;
 	var _idx = req.idx;
