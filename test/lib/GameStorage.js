@@ -38,7 +38,11 @@ describe('GameStorage', function() {
                     testData.id.should.equal(data.id);
                     testData.name.should.equal(data.name);
                     //put again to task 
-                    done();
+                    gameStorage.put(testTableName, testData, function(err) {
+                        should.not.exist(err);
+                        done();
+                    });
+                    
 
                     //testData._id = data._id;
                 });
