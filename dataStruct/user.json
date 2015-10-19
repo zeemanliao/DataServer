@@ -1,14 +1,10 @@
 {
-	"user":{
+	"info":{
 		"id":null,
 		"name":null,
 		"pass":null,
 		"email":null,
 		"lastLoginDate":null,
 		"lastLoginTime":null
-	},
-	"item":{
-		"userid":null,
-		"items":[]
 	}
 }

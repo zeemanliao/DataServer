@@ -11,7 +11,13 @@ var dataStruct = {};
 dataStruct.user = require('./dataStruct/user.json');
 var storage = new Storage({dbStorage:dbStorage, dataStruct:dataStruct});
 
-storage.load();
+storage.load(function (err, data) {
+	if (err) {
+		console.log(err);
+	} else{
+		console.log(data);
+	}
+});
 
 storage.start();
 
@@ -38,16 +44,11 @@ server.on('get', function(client, req) {
 server.on('put', function(client, req) {
 	var _table = req.table;
 	var _data = req.data;
+
 	storage.put(_table, _data, function(err, _data) {
 		if (err)
 			return console.log(err);
 
 	});
+
 });
-
-server.on('getNewID', function(client) {
-	var newID = storage.getNewID();
-	server.send(client.name, 'getNewID', newID);
-});
-
-
