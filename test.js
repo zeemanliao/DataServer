@@ -17,7 +17,7 @@ setTimeout(add, 1000);
 
 
 function add() {
-	for (var addi = 1;addi<100;addi++) {
+	for (var addi = 1;addi<1001;addi++) {
 		//var _id = getNewID();
 		var data = {info:{id:'id'+addi,name:'name'+addi}};
 		dataServer.send('put', {table:'user',data:data});
