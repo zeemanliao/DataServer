@@ -52,3 +52,7 @@ server.on('put', function(client, req) {
 	});
 
 });
+
+server.on('getNewID', function(client, req) {
+	server.send(client.name, 'newID', storage.getNewID(req));
+});

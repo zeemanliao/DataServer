@@ -13,8 +13,9 @@ for (var i =0; i<100;i++) {
 	dataServer.send('getNewID');
 }
 */
-setTimeout(add, 1000);
+//setTimeout(add, 1000);
 
+dataServer.send('getNewID',100000);
 
 function add() {
 	for (var addi = 1;addi<1001;addi++) {
@@ -23,6 +24,10 @@ function add() {
 		dataServer.send('put', {table:'user',data:data});
 	}
 }
+
+dataServer.on('newID', function(ids){
+	console.log(ids);
+});
 /*
 function getNewID() {
 	var _id = newID.shift();
