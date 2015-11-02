@@ -1,7 +1,36 @@
 
 var gameConnect = require('zeeman-game-connect');
 var dataServer = gameConnect.createClient({name:'test',port:9988});
+dataServer.on('server message',function (data) {
+	console.log('Data Server Message:');
+	console.log(data.message);
+});
+dataServer.send('shutdown', {pwd:'1234'});
+dataServer.on('disconnect', function() {
+	console.log('%s Data Server Disconnect ...',new Date().toJSON());
+});
+dataServer.on("connect", function() {
+	console.log('%s Data Server Connect ...',new Date().toJSON());
+});
 /*
+dataServer.send('get', {table:'chara'});
+
+dataServer.on('get', function( datas) {
+	changeData(datas);
+});
+
+function changeData(datas) {
+	for (var i in datas) {
+		var _data = datas[i];
+		_data.update +=1;
+	}
+	dataServer.send('put', {table:'chara',data:datas});
+}
+
+dataServer.on('put', function(ok) {
+	console.log(ok);
+});
+
 var newID = [];
 
 dataServer.on('getNewID',function(data) {
@@ -12,10 +41,10 @@ dataServer.on('getNewID',function(data) {
 for (var i =0; i<100;i++) {
 	dataServer.send('getNewID');
 }
-*/
+
 //setTimeout(add, 1000);
 
-dataServer.send('getNewID',100000);
+dataServer.send('getNewID',100);
 
 function add() {
 	for (var addi = 1;addi<1001;addi++) {
