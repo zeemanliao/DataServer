@@ -5,12 +5,32 @@ dataServer.on('server message',function (data) {
 	console.log('Data Server Message:');
 	console.log(data.message);
 });
-dataServer.send('shutdown', {pwd:'1234'});
+
+//dataServer.send('shutdown', {pwd:'1234'});
 dataServer.on('disconnect', function() {
 	console.log('%s Data Server Disconnect ...',new Date().toJSON());
 });
 dataServer.on("connect", function() {
 	console.log('%s Data Server Connect ...',new Date().toJSON());
+});
+var chara;
+
+dataServer.send('get', {table:'chara'});
+
+dataServer.on('get', function(data) {
+	charas = data;
+	console.log('got Data');
+	for (var i in charas) {
+		var chara = charas[i];
+		chara.name += 'test';
+		dataServer.send('put', {table:'chara',data:chara});
+	}
+
+});
+
+dataServer.on('err', function(err) {
+	console.log('err opt:%s', err.opt);
+	console.log('err message:%s', err.message);
 });
 /*
 dataServer.send('get', {table:'chara'});

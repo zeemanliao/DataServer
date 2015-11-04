@@ -5,11 +5,12 @@ var Storage = require('./lib/GameStorage');
 var DBStorage = require('./lib/DBStorage');
 var dbStorage = new DBStorage({database:'gamedb'});
 var uncaughtException = false;
-var storage = new Storage({dbStorage:dbStorage, tables:['chara']});
-
 var debug;
+var storage = new Storage({dbStorage:dbStorage, tables:['chara'], debug:debug});
+
 if (process.env.DEBUG) {
 	debug = function (data) {
+		console.log('\033[33m[' + new Date().toJSON() + ']\033[39m ');
 		console.error(data);
 	};
 } else {
@@ -27,15 +28,34 @@ var load = function () {
 }
 
 storage.on('loaded', function() {
-	console.log(storage.datas);
+	log('Game Data Loaded ...');
+	debug(storage.datas);
+
 	storage.start();
+
+});
+
+storage.on('loading', () => {
+	log('Game Data Loading ...');
+});
+
+storage.on('before run', () => {
+	//debug('Storage run Start...');
+});
+
+storage.on('after run', updates => {
+	if (updates) {
+		debug(updates);
+	} else {
+		log('after run');
+	}
 });
 
 load();
 
 var server = gameConnect.createServer({port:9988});
 
-storage.on('error', function(s, err) {
+storage.on('error', function(err) {
 	if (err) {
 		debug(err);
 		console.trace();
@@ -43,14 +63,20 @@ storage.on('error', function(s, err) {
 });
 
 server.on('get', function(client, req) {
+	if (!req)
+		return server.send(client.name, 'err', {opt:'get',message:'undefine req {table,idx}'});
 	var _table = req.table;
 	var _idx = req.idx;
-	storage.get(_table, _idx, function(err, data) {
-		if (err)
-			return console.log(err);
+	if (_table) {
+		storage.get(_table, _idx, function(err, data) {
+			if (err)
+				return console.log(err);
 
-		server.send(client.name, 'get', data);
-	});
+			server.send(client.name, 'get', data);
+		});
+	} else {
+		server.send(client.name, 'err', {opt:'get',message:'undefine get table name'});
+	}
 });
 
 server.on('put', function(client, req) {
@@ -90,6 +116,7 @@ function unknowException(e) {
 		closeServer();
 	}
 }
+
 function closeServer() {
 	log('Server Shutdowning ...');
 	load = function() {};
