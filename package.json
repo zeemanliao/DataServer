@@ -9,9 +9,10 @@
   },
   "scripts": {
     "test": "grunt",
-    "start": "iojs index.js"
+    "start": "node index.js"
   },
   "keywords": [
+    "game",
     "data",
     "server"
   ],

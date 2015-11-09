@@ -1,3 +1,12 @@
+"use strict";
+var config = {
+	name:'Data Server',
+	databaseName:'gamedb',
+	tables:['chara'],
+	port:9988,
+	adminServer:{ip:'localhost',port:1978}
+};
+
 var path = require('path');
 
 var gameConnect = require('zeeman-game-connect');
@@ -6,11 +15,19 @@ var DBStorage = require('./lib/DBStorage');
 var dbStorage = new DBStorage({database:'gamedb'});
 var uncaughtException = false;
 var debug;
-var storage = new Storage({dbStorage:dbStorage, tables:['chara'], debug:debug});
+var storage = new Storage({dbStorage:dbStorage, tables:['chara']});
+var server = gameConnect.createServer({port:9988});
+
+//import * as STORAGE_CONST from './lib/StorageEvent';
+
+var adminServer = gameConnect.createClient({name:'Data Server',port:1978});
+adminServer.on('connect', function(){
+	adminServer.send('test','Data Server Connect');
+});
 
 if (process.env.DEBUG) {
 	debug = function (data) {
-		console.log('\033[33m[' + new Date().toJSON() + ']\033[39m ');
+		console.log('\u001b33[33m[' + new Date().toJSON() + ']\u001b33[39m ');
 		console.error(data);
 	};
 } else {
@@ -27,7 +44,7 @@ var load = function () {
 	});
 }
 
-storage.on('loaded', function() {
+storage.on(storage.EVENT_LOADED, function() {
 	log('Game Data Loaded ...');
 	debug(storage.datas);
 
@@ -35,27 +52,30 @@ storage.on('loaded', function() {
 
 });
 
-storage.on('loading', () => {
+
+storage.on(storage.EVENT_LOADING, () => {
 	log('Game Data Loading ...');
 });
 
-storage.on('before run', () => {
+storage.on(storage.EVENT_BEFORE_RUN, () => {
 	//debug('Storage run Start...');
 });
 
-storage.on('after run', updates => {
+storage.on(storage.EVENT_AFTER_RUN, updates => {
 	if (updates) {
 		debug(updates);
 	} else {
-		log('after run');
+
 	}
 });
 
+storage.on(storage.EVENT_ROLLBACK, function(tableName, _updates) {
+	log('Rollback tableName:%s', tableName);
+	log(_updates);
+});
 load();
 
-var server = gameConnect.createServer({port:9988});
-
-storage.on('error', function(err) {
+storage.on(storage.EVENT_ERROR, function(err) {
 	if (err) {
 		debug(err);
 		console.trace();
@@ -138,6 +158,6 @@ function log() {
 		msg = msg.replace('%s',arguments[s]);
 	}
 	msg = msg;
-	console.log('\033[32m[' + new Date().toJSON() + ']\033[39m ');
+	console.log('\u001b[32m[' + new Date().toJSON() + ']\u001b[39m ');
 	console.log(msg);
 }
