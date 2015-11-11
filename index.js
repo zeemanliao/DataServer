@@ -42,7 +42,7 @@ var load = function () {
 			setTimeout(load, 3000);
 		}
 	});
-}
+};
 
 storage.on(storage.EVENT_LOADED, function() {
 	log('Game Data Loaded ...');
