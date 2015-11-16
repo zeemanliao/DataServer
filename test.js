@@ -3,7 +3,7 @@ let DataServer = require('./lib/DataServer');
 let uncaughtException = false;
 let config = {
 	name:'Data Server',
-	databaseName:'gamedb',
+	db:{name:'gamedb'},
 	tables:['chara'],
 	port:9988,
 	adminServer:{ip:'localhost',port:1978}

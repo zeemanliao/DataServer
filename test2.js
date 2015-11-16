@@ -1,6 +1,27 @@
+"use strict";
+let gameConnect = require('zeeman-game-connect');
+let client = gameConnect.createClient(
+	{
+		port:9988,
+		name:'test',
+		ip:'localhost'
+	}
+);
+
+client.send('get', {table:'chara'});
+client.on('get', function(data){
+	console.log(data);
+});
+client.on('err', function(data){
+	console.log(data);
+});
+client.on('connect', function(){
+	console.log('connect');
+});
+/*
 var DBStorage = require('./lib/DBStorage');
 var db = new DBStorage({database:'gamedb'});
-/*
+
 db.listTable(function(err, tables) {
 	if (err)
 		return console.log(err);
@@ -69,9 +90,3 @@ db.get('chara', {}, function(err, datas) {
 });
 
 */
-var person1 = {"id":1,"items":[{"id":1,"nam":"a"},{"id":1,"nam":"a"}],"attr":{"str":1,"hp":3,"mp":4}};
-var person2 = {"id":1,"items":[{"id":1,"nam":"a"},{"id":1,"nam":"a"}],"attr":{"str":1,"hp":3,"mp":4}};
-var a = JSON.stringify(person1);//'{"firstName":"JP","lastName":"Richardson"}'
-var b = JSON.stringify(person2);//'{"firstName":"JP","lastName":"Richardson"}'
-
-console.log(a === b);
