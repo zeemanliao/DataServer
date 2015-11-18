@@ -9,7 +9,7 @@ let config = {
 	adminServer:{ip:'localhost',port:1978}
 };
 
-let dataServer1 = new DataServer(config);
+let dataServer1 = DataServer(config);
 
 process.on('SIGINT', closeServer);
 

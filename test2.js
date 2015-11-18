@@ -1,23 +1,31 @@
 "use strict";
-let gameConnect = require('zeeman-game-connect');
-let client = gameConnect.createClient(
-	{
-		port:9988,
-		name:'test',
-		ip:'localhost'
-	}
-);
+let test = require('./lib/output/AdminServer');
 
-client.send('get', {table:'chara'});
-client.on('get', function(data){
-	console.log(data);
-});
-client.on('err', function(data){
-	console.log(data);
-});
-client.on('connect', function(){
-	console.log('connect');
-});
+let msg1 = {log:'msg1'};
+let msg2 = {log:'msg2'};
+
+function m(msg) {
+	this.log = msg.log;
+	this.gameStorage = {info:msg};
+	this.adminServer = {connected:true,send:function(){}};
+}
+
+function test1(msg) {
+	let _server = new m(msg);
+	let _autoAdmin = test(_server);
+	let _runFun = function() {
+		_autoAdmin();
+		setTimeout(_runFun, 1000);
+	}
+	_runFun();
+	return _server;
+};
+
+let t1 = new test1(msg1);
+
+let t2 = new test1(msg2);
+
+
 /*
 var DBStorage = require('./lib/DBStorage');
 var db = new DBStorage({database:'gamedb'});
