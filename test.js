@@ -38,32 +38,6 @@ function closeServer() {
 	});
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function log() {
 	
 	var msg = arguments['0'];
